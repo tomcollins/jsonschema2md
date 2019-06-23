@@ -1,4 +1,6 @@
 | Nullable | <%= schema.nullable === true ? "Yes" : "No" %> |
+<% if(schema.minLength!==undefined) { %>| Min Length | <%=schema.minLength %> |<% } %>
+<% if(schema.maxLength!==undefined) { %>| Max Length | <%=schema.maxLength %> |<% } %>
 <% if(schema.format!==undefined) { %>
 | Format | <% 
 if (schema.format==="uri") {                        %>`uri` – Uniformous Resource Identifier (according to [RFC3986](http://tools.ietf.org/html/rfc3986))<% } 
@@ -19,10 +21,5 @@ else if (schema.format==="regex") {                 %>`regex` – Regular Expres
 else if (schema.format==="relative-json-pointer") { %>`relative-json-pointer` – Relative JSON Pointer (according to [Relative JSON Pointer](http://tools.ietf.org/html/draft-handrews-relative-json-pointer-00))<% } 
 else if (schema.format==="hostname") {              %>`hostname` – Domain Name (according to [RFC 1034, section 3.1](https://tools.ietf.org/html/rfc1034))<% } %>|
 <% } %>
-<% if(schema.minLength) { %>| Min Length | <%=schema.minLength %> |<% } %>
-<% if(schema.maxLength) { %>| Max Length | <%=schema.maxLength %> |<% } %>
-<% if(schema.pattern) { %>
-| Pattern | [<%= schema.pattern %>](https://regexr.com/?expression=<%- encodeURIComponent(schema.pattern) %>) |
-
-
+<% if(schema.pattern!==undefined) { %>| Pattern | [<%= schema.pattern %>](https://regexr.com/?expression=<%- encodeURIComponent(schema.pattern) %>) |
 <% } %>
