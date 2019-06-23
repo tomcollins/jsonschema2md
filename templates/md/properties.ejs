@@ -4,19 +4,15 @@
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
  */ %>
-# <%=title %> Properties
+## Attributes
 
 <% const hasDefault = _.keys(props).filter(property => _.has(props, property + '.default')).length > 0; %>
 
-| Property | Type | Required | Nullable |<% if(hasDefault) { %> Default |<% } %> Defined by |
-|----------|------|----------|----------|<% if(hasDefault) { %>---------|<% } %>------------|
+| Property | Type | Required |
+|----------|------|----------|
 <% _.keys(props).sort().forEach(property => {
   const schema = props[property]; %>
-| [<%= property %>](#<%= propertiesSlugs[property] %>) | <%= schema.simpletype %> | <%= schema.isrequired === true ? "**Required**" : "Optional" %>  | <%= schema.nullable === true ? "Yes" : "No" %> |<% if(hasDefault) { %> <% if (schema.default!==undefined) { %>`<%- JSON.stringify(schema.default) %>`<% } %> |<% } %> <%
-    if (schema.$oSchema) { 
-      %>[<%= schema.$oSchema.$linkVal %>](<%= schema.$oSchema.$linkPath %>#<%= propertiesSlugs[property] %>)<% 
-    } else { 
-      %><%= title %> (this schema)<% } %> |
+  | [<%= property %>](#<%= propertiesSlugs[property] %>) | <%= schema.$ref!==undefined ? "[" + schema.$linkVal +"](" + schema.$linkPath +")" : schema.simpletype %> | <%= schema.isrequired === true ? "Yes" : "No" %>|
 <%
 });
 %><% _.keys(pprops).forEach(property => {
@@ -29,5 +25,5 @@
 <%
 });
 %><% if (additional!==false||additional===undefined) { %>
-| `*` | any | Additional | Yes | this schema *allows* additional properties |
+| `*` | any | Yes |
 <% } %>
